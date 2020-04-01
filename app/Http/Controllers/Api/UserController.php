@@ -28,7 +28,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        if(!$request->has('password') || !$request->get('password')) {
+            $message = 'É necessário informar uma senha para usuário...';
+            return response()->json(['message' => $message], 401);
+        }
+
+        try {
+            $data['password'] = bcrypt($data['password']);
+
+            $user = User::create($data);
+
+            return response()->json([
+                'data' => [
+                    'msg' => 'Usuário cadastrado com sucesso!'
+                ]
+            ], 201);
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            return response()->json(['message' => $message], 401);
+        }
     }
 
     /**
@@ -39,7 +58,14 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $user = User::findOrFail($id);
+
+            return response()->json(['data' => $user], 200);
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            return response()->json(['message' => $message], 401);
+        }
     }
 
     /**
@@ -51,7 +77,27 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        if($request->has('password') && $request->get('password')) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        try {
+            $user = User::findOrFail($id);
+            $user->update($data);
+
+            return response()->json([
+                'data' => [
+                    'msg' => 'Usuário atualizado com sucesso!'
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            return response()->json(['message' => $message], 401);
+        }
     }
 
     /**
@@ -62,6 +108,18 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+
+            return response()->json([
+                'data' => [
+                    'msg' => 'Usuário removido com sucesso!'
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            return response()->json(['message' => $message], 401);
+        }
     }
 }

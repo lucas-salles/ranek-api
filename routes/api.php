@@ -24,6 +24,8 @@ Route::namespace('Api')->group(function() {
     Route::post('refresh', 'AuthController@refresh');
 
     Route::group(['middleware' => ['jwtAuth']], function() {
-
+        Route::name('users.')->group(function() {
+            Route::resource('users', 'UserController');
+        });
     });
 });
