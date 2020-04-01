@@ -15,7 +15,15 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->string('nome');
+            $table->string('descricao');
+            $table->decimal('preco', 10, 2);
+            $table->boolean('vendido')->default(false);
+            $table->string('slug');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

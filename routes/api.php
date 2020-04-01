@@ -27,5 +27,13 @@ Route::namespace('Api')->group(function() {
         Route::name('users.')->group(function() {
             Route::resource('users', 'UserController');
         });
+
+        Route::name('products.')->group(function() {
+            Route::resource('products', 'ProductController');
+        });
+
+        Route::name('photos.')->prefix('photos')->group(function() {
+            Route::delete('/{id}', 'ProductPhotoController@remove');
+        });
     });
 });
