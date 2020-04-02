@@ -19,13 +19,26 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::namespace('Api')->group(function() {
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
+    Route::post('login', 'AuthController@login')->name('login');
+    Route::post('logout', 'AuthController@logout')->name('logout');
+    Route::post('refresh', 'AuthController@refresh')->name('refresh');
+
+    Route::get('/search', 'ProductSearchController@index')->name('search');
+
+    Route::post('users', 'UserController@store')->name('users.store');
 
     Route::group(['middleware' => ['jwtAuth']], function() {
-        Route::name('users.')->group(function() {
-            Route::resource('users', 'UserController');
+        // Route::name('users.')->group(function() {
+        //     Route::resource('users', 'UserController');
+        // });
+
+        Route::prefix('users')->name('users.')->group(function() {
+            Route::get('/', 'UserController@index')->name('index');
+            Route::get('/{user}', 'UserController@show')->name('show');
+            // Route::put('/{user}', 'UserController@update')->name('update');
+            // Route::patch('/{user}', 'UserController@update')->name('update');
+            Route::match(['put', 'patch'], '/{user}', 'UserController@update')->name('update');
+            Route::delete('/{user}', 'UserController@destroy')->name('destroy');
         });
 
         Route::name('products.')->group(function() {
@@ -33,7 +46,7 @@ Route::namespace('Api')->group(function() {
         });
 
         Route::name('photos.')->prefix('photos')->group(function() {
-            Route::delete('/{id}', 'ProductPhotoController@remove');
+            Route::delete('/{id}', 'ProductPhotoController@remove')->name('remove');
         });
     });
 });

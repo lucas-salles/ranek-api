@@ -15,9 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = auth('api')->user()->products();
 
-        return response()->json($products, 200);
+        return response()->json($products->paginate(10), 200);
     }
 
     /**
@@ -30,7 +30,7 @@ class ProductController extends Controller
     {
         $data = $request->all();
         $images = $request->file('images');
-
+        
         try {
             $data['user_id'] = auth('api')->user()->id;
 
@@ -41,7 +41,9 @@ class ProductController extends Controller
 
                 foreach ($images as $image) {
                     $path = $image->store('images', 'public');
-                    $imagesUploaded[] = ['photo' => $path];
+                    $filename = $image->getClientOriginalName();
+                    $titulo = pathinfo($filename, PATHINFO_FILENAME);
+                    $imagesUploaded[] = ['titulo' => $titulo, 'photo' => $path];
                 }
                 
                 $product->photos()->createMany($imagesUploaded);
