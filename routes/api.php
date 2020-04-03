@@ -29,15 +29,9 @@ Route::namespace('Api')->group(function() {
     Route::post('users', 'UserController@store')->name('users.store');
 
     Route::group(['middleware' => ['jwtAuth']], function() {
-        // Route::name('users.')->group(function() {
-        //     Route::resource('users', 'UserController');
-        // });
-
         Route::prefix('users')->name('users.')->group(function() {
             Route::get('/', 'UserController@index')->name('index');
             Route::get('/{user}', 'UserController@show')->name('show');
-            // Route::put('/{user}', 'UserController@update')->name('update');
-            // Route::patch('/{user}', 'UserController@update')->name('update');
             Route::match(['put', 'patch'], '/{user}', 'UserController@update')->name('update');
             Route::delete('/{user}', 'UserController@destroy')->name('destroy');
         });
