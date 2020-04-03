@@ -34,7 +34,7 @@ class ProductSearchController extends Controller
         }
 
         return response()->json([
-            'data' => $repository->getResult()->where('vendido', false)->paginate(10)
+            'data' => $repository->getResult()->where('sold', false)->paginate(10)
         ], 200);
     }
 

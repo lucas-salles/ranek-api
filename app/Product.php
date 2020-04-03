@@ -9,7 +9,7 @@ class Product extends Model
     protected $appends = ['_links'];
 
     protected $fillable = [
-        'user_id', 'nome', 'descricao', 'preco', 'vendido', 'slug'
+        'user_id', 'name', 'description', 'price', 'sold', 'slug'
     ];
 
     // Accessors
@@ -29,5 +29,10 @@ class Product extends Model
     public function photos()
     {
         return $this->hasMany(ProductPhoto::class);
+    }
+
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
     }
 }

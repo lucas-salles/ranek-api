@@ -9,7 +9,7 @@ class ProductPhoto extends Model
     protected $appends = ['src'];
 
     protected $fillable = [
-        'titulo', 'photo'
+        'title', 'photo'
     ];
 
     //caminho da imagem no front:

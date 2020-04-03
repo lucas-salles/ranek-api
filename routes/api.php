@@ -24,6 +24,7 @@ Route::namespace('Api')->group(function() {
     Route::post('refresh', 'AuthController@refresh')->name('refresh');
 
     Route::get('/search', 'ProductSearchController@index')->name('search');
+    Route::get('/search/{product_id}', 'RealStateSearchController@show')->name('search_single');
 
     Route::post('users', 'UserController@store')->name('users.store');
 
@@ -47,6 +48,12 @@ Route::namespace('Api')->group(function() {
 
         Route::name('photos.')->prefix('photos')->group(function() {
             Route::delete('/{id}', 'ProductPhotoController@remove')->name('remove');
+        });
+
+        Route::prefix('transactions')->name('transactions.')->group(function() {
+            Route::get('/', 'TransactionController@index')->name('index');
+            Route::post('/', 'TransactionController@store')->name('store');
+            Route::get('/{transaction}', 'TransactionController@show')->name('show');
         });
     });
 });

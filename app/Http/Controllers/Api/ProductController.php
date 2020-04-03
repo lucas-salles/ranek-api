@@ -41,9 +41,9 @@ class ProductController extends Controller
 
                 foreach ($images as $image) {
                     $path = $image->store('images', 'public');
-                    $filename = $image->getClientOriginalName();
-                    $titulo = pathinfo($filename, PATHINFO_FILENAME);
-                    $imagesUploaded[] = ['titulo' => $titulo, 'photo' => $path];
+                    $fileName = $image->getClientOriginalName();
+                    $title = pathinfo($fileName, PATHINFO_FILENAME);
+                    $imagesUploaded[] = ['title' => $title, 'photo' => $path];
                 }
                 
                 $product->photos()->createMany($imagesUploaded);
@@ -101,7 +101,9 @@ class ProductController extends Controller
 
                 foreach ($images as $image) {
                     $path = $image->store('images', 'public');
-                    $imagesUploaded[] = ['photo' => $path, 'is_thumb' => false];
+                    $fileName = $image->getClientOriginalName();
+                    $title = pathinfo($fileName, PATHINFO_FILENAME);
+                    $imagesUploaded[] = ['title' => $title, 'photo' => $path];
                 }
                 
                 $product->photos()->createMany($imagesUploaded);
