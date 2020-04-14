@@ -43,7 +43,7 @@ class ProductController extends Controller
                     $path = $image->store('images', 'public');
                     $fileName = $image->getClientOriginalName();
                     $title = pathinfo($fileName, PATHINFO_FILENAME);
-                    $imagesUploaded[] = ['title' => $title, 'photo' => $path];
+                    $imagesUploaded[] = ['titulo' => $title, 'foto' => $path];
                 }
                 
                 $product->photos()->createMany($imagesUploaded);
@@ -103,7 +103,7 @@ class ProductController extends Controller
                     $path = $image->store('images', 'public');
                     $fileName = $image->getClientOriginalName();
                     $title = pathinfo($fileName, PATHINFO_FILENAME);
-                    $imagesUploaded[] = ['title' => $title, 'photo' => $path];
+                    $imagesUploaded[] = ['titutlo' => $title, 'foto' => $path];
                 }
                 
                 $product->photos()->createMany($imagesUploaded);

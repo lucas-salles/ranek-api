@@ -24,7 +24,7 @@ Route::namespace('Api')->group(function() {
     Route::post('refresh', 'AuthController@refresh')->name('refresh');
 
     Route::get('/search', 'ProductSearchController@index')->name('search');
-    Route::get('/search/{product_id}', 'RealStateSearchController@show')->name('search_single');
+    Route::get('/search/{product_id}', 'ProductSearchController@show')->name('search_single');
 
     Route::post('users', 'UserController@store')->name('users.store');
 

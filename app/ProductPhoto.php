@@ -9,14 +9,14 @@ class ProductPhoto extends Model
     protected $appends = ['src'];
 
     protected $fillable = [
-        'title', 'photo'
+        'titulo', 'foto'
     ];
 
     //caminho da imagem no front:
     //http://127.0.0.1:8000/storage/images/img.jpg
     public function getSrcAttribute()
     {
-        $src = asset('storage/' . $this->photo);
+        $src = asset('storage/' . $this->foto);
 
         return $src;
     }

@@ -15,20 +15,20 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('purchaser_id');
-            $table->foreignId('vendor_id');
+            $table->foreignId('comprador_id');
+            $table->foreignId('vendedor_id');
             $table->foreignId('product_id');
-            $table->string('street');
-            $table->integer('number');
-            $table->string('neighborhood');
-            $table->string('complement')->nullable();
-            $table->integer('zip_code');
-            $table->string('city');
-            $table->string('state');
+            $table->string('rua');
+            $table->integer('numero');
+            $table->string('bairro');
+            $table->string('complemento')->nullable();
+            $table->integer('cep');
+            $table->string('cidade');
+            $table->string('estado');
             $table->timestamps();
 
-            $table->foreign('purchaser_id')->references('id')->on('users');
-            $table->foreign('vendor_id')->references('id')->on('users');
+            $table->foreign('comprador_id')->references('id')->on('users');
+            $table->foreign('vendedor_id')->references('id')->on('users');
             $table->foreign('product_id')->references('id')->on('products');
         });
     }

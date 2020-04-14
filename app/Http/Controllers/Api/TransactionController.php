@@ -27,11 +27,11 @@ class TransactionController extends Controller
         $user = auth('api')->user()->id;
         $repository = new TransactionRepository($this->transaction);
 
-        if($request->has('type')) {
-            $data = $request->only(['type']);
-		    $repository->getUserTransactions($data['type'], $user);
+        if($request->has('tipo')) {
+            $data = $request->only(['tipo']);
+		    $repository->getUserTransactions($data['tipo'], $user);
 	    } else {
-            $repository->getUserTransactions('purchaser_id', $user);
+            $repository->getUserTransactions('comprador_id', $user);
         }
 
         return response()->json([
@@ -50,16 +50,16 @@ class TransactionController extends Controller
         $data = $request->all();
 
         $product = Product::findOrFail($data['product_id']);
-        if($product->sold) {
+        if($product->vendido) {
             $message = 'Não é possível fazer a compra. Produto já comprado';
             return response()->json(['message' => $message], 401);
         }
         
         try {
-            $data['purchaser_id'] = auth('api')->user()->id;
-            $data['vendor_id'] = $product->user_id;
+            $data['comprador_id'] = auth('api')->user()->id;
+            $data['vendedor_id'] = $product->user_id;
             $transaction = Transaction::create($data);
-            $product->sold = true;
+            $product->vendido = true;
             $product->update();
 
             return response()->json([
@@ -89,28 +89,5 @@ class TransactionController extends Controller
             $message = $e->getMessage();
             return response()->json(['message' => $message], 401);
         }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

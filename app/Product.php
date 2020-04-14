@@ -9,7 +9,7 @@ class Product extends Model
     protected $appends = ['_links'];
 
     protected $fillable = [
-        'user_id', 'name', 'description', 'price', 'sold', 'slug'
+        'user_id', 'nome', 'descricao', 'preco', 'vendido', 'slug'
     ];
 
     // Accessors

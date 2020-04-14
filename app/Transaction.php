@@ -9,23 +9,23 @@ class Transaction extends Model
     protected $appends = ['address'];
 
     protected $hidden = [
-        'street', 'number', 'neighborhood', 'complement', 'zip_code', 'city', 'state'
+        'rua', 'numero', 'bairro', 'complemento', 'cep', 'cidade', 'estado'
     ];
 
     protected $fillable = [
-        'purchaser_id', 'vendor_id', 'product_id', 'street', 'number', 'neighborhood', 'complement', 'zip_code', 'city', 'state'
+        'comprador_id', 'vendedor_id', 'product_id', 'rua', 'numero', 'bairro', 'complemento', 'cep', 'cidade', 'estado'
     ];
 
     public function getAddressAttribute()
     {
         $address = [
-            'street' => $this->street,
-            'number' => $this->number,
-            'neighborhood' => $this->neighborhood,
-            'complement' => $this->complement,
-            'zip_code' => $this->zip_code,
-            'city' => $this->city,
-            'state' => $this->state
+            'rua' => $this->street,
+            'numero' => $this->number,
+            'bairro' => $this->neighborhood,
+            'complemento' => $this->complement,
+            'cep' => $this->zip_code,
+            'cidade' => $this->city,
+            'estado' => $this->state
         ];
 
         return $address;

@@ -25,6 +25,15 @@ class ProductSearchController extends Controller
     {
         $repository = new AbstractRepository($this->product);
 
+        /**
+         * Exemplo com conditions:
+         * http://127.0.0.1:8000/api/search/?conditions=nome:ilike:notebook
+         * http://127.0.0.1:8000/api/search/?conditions=preco:>:1000
+         * Exemplo com fields:
+         * http://127.0.0.1:8000/api/search/?fields=id,nome,preco
+         * Exemplo com conditions e fields:
+         * http://127.0.0.1:8000/api/search/?conditions=preco:<=:1000&fields=id,nome,preco
+         */
         if($request->has('conditions')) {
 		    $repository->selectConditions($request->get('conditions'));
 	    }
@@ -34,7 +43,7 @@ class ProductSearchController extends Controller
         }
 
         return response()->json([
-            'data' => $repository->getResult()->where('sold', false)->paginate(10)
+            'data' => $repository->getResult()->where('vendido', false)->paginate(10)
         ], 200);
     }
 

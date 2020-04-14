@@ -15,7 +15,7 @@ class ProductPhotoController extends Controller
             $photo = ProductPhoto::find($photoId);
 
             if($photo) {
-                Storage::disk('public')->delete($photo->photo);
+                Storage::disk('public')->delete($photo->foto);
                 $photo->delete();
             }
 
