@@ -20,7 +20,6 @@ class CreateProductsTable extends Migration
             $table->string('descricao');
             $table->decimal('preco', 10, 2);
             $table->boolean('vendido')->default(false);
-            $table->string('slug');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -31,11 +31,16 @@ class TransactionController extends Controller
             $data = $request->only(['tipo']);
 		    $repository->getUserTransactions($data['tipo'], $user);
 	    } else {
-            $repository->getUserTransactions('comprador_id', $user);
+            $repository->getUserTransactions('comprador', $user);
         }
 
         return response()->json([
-            'data' => $repository->getResult()->paginate(10)
+            'data' => $repository
+                                ->getResult()
+                                ->with('vendedor')
+                                ->with('comprador')
+                                ->with('product.photos')
+                                ->paginate(9)
         ], 200);
     }
 

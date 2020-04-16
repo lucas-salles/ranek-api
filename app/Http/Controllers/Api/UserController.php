@@ -15,9 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
+        $user = auth('api')->user();
 
-        return response()->json($users, 200);
+        return response()->json($user, 200);
     }
 
     /**
@@ -34,6 +34,7 @@ class UserController extends Controller
             return response()->json(['message' => $message], 401);
         }
 
+        
         try {
             $data['password'] = bcrypt($data['password']);
 
@@ -86,7 +87,7 @@ class UserController extends Controller
         }
 
         try {
-            $user = User::findOrFail($id);
+            $user = auth('api')->user();
             $user->update($data);
 
             return response()->json([

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    protected $appends = ['address'];
+    protected $appends = ['endereco'];
 
     protected $hidden = [
         'rua', 'numero', 'bairro', 'complemento', 'cep', 'cidade', 'estado'
@@ -16,27 +16,27 @@ class Transaction extends Model
         'comprador_id', 'vendedor_id', 'product_id', 'rua', 'numero', 'bairro', 'complemento', 'cep', 'cidade', 'estado'
     ];
 
-    public function getAddressAttribute()
+    public function getEnderecoAttribute()
     {
-        $address = [
-            'rua' => $this->street,
-            'numero' => $this->number,
-            'bairro' => $this->neighborhood,
-            'complemento' => $this->complement,
-            'cep' => $this->zip_code,
-            'cidade' => $this->city,
-            'estado' => $this->state
+        $endereco = [
+            'rua' => $this->rua,
+            'numero' => $this->numero,
+            'bairro' => $this->bairro,
+            'complemento' => $this->complemento,
+            'cep' => $this->cep,
+            'cidade' => $this->cidade,
+            'estado' => $this->estado
         ];
 
-        return $address;
+        return $endereco;
     }
 
-    public function purchaser()
+    public function comprador()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function vendor()
+    public function vendedor()
     {
         return $this->belongsTo(User::class);
     }

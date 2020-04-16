@@ -17,7 +17,7 @@ class ProductController extends Controller
     {
         $products = auth('api')->user()->products();
 
-        return response()->json($products->paginate(10), 200);
+        return response()->json($products->with('photos')->paginate(9), 200);
     }
 
     /**
@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $images = $request->file('images');
+        $images = $request->file('fotos');
         
         try {
             $data['user_id'] = auth('api')->user()->id;
@@ -69,9 +69,7 @@ class ProductController extends Controller
     public function show($id)
     {
         try {
-            $product = auth('api')->user()->products()
-                                            ->with('photos')
-                                            ->findOrFail($id);
+            $product = Product::with('photos')->findOrFail($id);
 
             return response()->json(['data' => $product], 200);
         } catch (\Exception $e) {
@@ -90,7 +88,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $images = $request->file('images');
+        $images = $request->file('fotos');
 
         try {
             $product = auth('api')->user()->products()->findOrFail($id);
@@ -103,7 +101,7 @@ class ProductController extends Controller
                     $path = $image->store('images', 'public');
                     $fileName = $image->getClientOriginalName();
                     $title = pathinfo($fileName, PATHINFO_FILENAME);
-                    $imagesUploaded[] = ['titutlo' => $title, 'foto' => $path];
+                    $imagesUploaded[] = ['titulo' => $title, 'foto' => $path];
                 }
                 
                 $product->photos()->createMany($imagesUploaded);

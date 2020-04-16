@@ -43,12 +43,12 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Product::class);
     }
 
-    public function purchaser()
+    public function comprador()
     {
         return $this->hasMany(Transaction::class, 'comprador_id');
     }
 
-    public function vendor()
+    public function vendedor()
     {
         return $this->hasMany(Transaction::class, 'vendedor_id');
     }

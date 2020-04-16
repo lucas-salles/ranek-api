@@ -19,10 +19,10 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('vendedor_id');
             $table->foreignId('product_id');
             $table->string('rua');
-            $table->integer('numero');
+            $table->string('numero');
             $table->string('bairro');
             $table->string('complemento')->nullable();
-            $table->integer('cep');
+            $table->string('cep');
             $table->string('cidade');
             $table->string('estado');
             $table->timestamps();

@@ -43,7 +43,12 @@ class ProductSearchController extends Controller
         }
 
         return response()->json([
-            'data' => $repository->getResult()->where('vendido', false)->paginate(10)
+            'data' => $repository
+                                ->getResult()
+                                ->with('photos')
+                                ->orderBy('id', 'DESC')
+                                ->where('vendido', false)
+                                ->paginate(9)
         ], 200);
     }
 
