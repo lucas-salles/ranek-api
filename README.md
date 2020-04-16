@@ -14,4 +14,4 @@ Foi utilizado o [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth
 
 ## Front-end
 
-O Front-end (projeto [Ranek](https://github.com/lucas-salles/ranek)) que consome essa API foi feito todo usando o framework [Vue.js](https://vuejs.org/index.html).
+O Front-end (projeto [Ranek](https://github.com/lucas-salles/ranek)) que consome essa API foi feito usando o framework [Vue.js](https://vuejs.org/index.html).
