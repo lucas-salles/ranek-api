@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -128,6 +129,11 @@ class ProductController extends Controller
     {
         try {
             $product = auth('api')->user()->products()->findOrFail($id);
+            $images = $product->photos;
+            foreach ($images as $image) {
+                Storage::disk('public')->delete($image->foto);
+                $image->delete();
+            }
             $product->delete();
 
             return response()->json([
